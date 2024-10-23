@@ -1,19 +1,14 @@
+from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import User
 
-class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('The Email field must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
 
-class User(AbstractBaseUser):
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=7, decimal_places=2)
+    #Come back to add images
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.email
+        return self.name

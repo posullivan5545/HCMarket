@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body.signup-page {
+            background-color: #6a0dad; /* Purple background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .signup-container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the form elements */
+        }
+        .signup-container .form-group {
+            margin-bottom: 15px;
+            width: 100%; /* Make form-group take full width */
+        }
+        .signup-container label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+            width: 100%; /* Make label take full width */
+        }
+        .signup-container input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%; /* Make input take full width */
+            box-sizing: border-box;
+        }
+        .signup-container button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%; /* Make button take full width */
+        }
+        .signup-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body class="signup-page">
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form id="signup-form" method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+
+    <!-- Popup Message -->
+    <div id="popup-message" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <p id="popup-text"></p>
+        </div>
+    </div>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
