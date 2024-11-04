@@ -29,6 +29,13 @@ nav a {
     display: inline-block;
 }
 
+.welcome-user {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
 nav a:hover {
     background-color: #555;
 }
