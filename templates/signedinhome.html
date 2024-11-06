@@ -13,9 +13,10 @@
     </header>
 
     <nav>
-        <span class="welcome-user">Welcome, {{ request.user.username }}!</span>
+        <span class="welcome-user">Welcome, {{ username }}!</span>
         <a href="#">Sell Item</a>
         <a href="{% url 'home' %}">Sign Out</a>
+        <a href="{% url 'profile' %}">Profile</a>
     </nav>
 
     <div class="container">
@@ -24,40 +25,20 @@
             <p>Buy and sell items with fellow Holy Cross students!</p>
         </section>
 
-        <section class="item-list">
+                <section class="item-list">
+            {% for product in products %}
             <div class="item">
-                <img src="https://m.media-amazon.com/images/I/91eA1LVJL+L._AC_UF1000,1000_QL80_.jpg" alt="Item Image">
-                <h3>Textbook: Introduction to Economics</h3>
-                <p>$45.00</p>
-                <button>Buy Now</button>
+                <img src="{{ product.image_url }}" alt="Attached Image">
+                <h3>{{ product.name }}</h3>
+                <p>${{ product.price }}</p>
+                <a href="{% url 'signin' %}">
+                    <button>View More Info</button>
+                </a>
             </div>
-
-            <div class="item">
-                <img src="https://target.scene7.com/is/image/Target/GUEST_43f55026-adf3-4fce-aed3-817994ff6d0e?wid=488&hei=488&fmt=pjpeg" alt="Item Image">
-                <h3>Dorm Lamp</h3>
-                <p>$20.00</p>
-                <button>Buy Now</button>
-            </div>
-
-            <div class="item">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQouFc9TkPTO98vpDYr0LI9b7nS9gaLPdx2Wg&s" alt="Item Image">
-                <h3>Used Bicycle</h3>
-                <p>$75.00</p>
-                <button>Buy Now</button>
-            </div>
-
-            <div class="item">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL_w9Vc3ApGiRdYhS9WWXQFS8xnQnyrr1ncg&s" alt="Item Image">
-                <h3>MacBook Air (2019)</h3>
-                <p>$650.00</p>
-                <button>Buy Now</button>
-            </div>
+            {% endfor %}
         </section>
+                
     </div>
-
-    <footer>
-        <p>&copy; Crusader Exchange 2024</p>
-    </footer>
 
 </body>
 </html>
