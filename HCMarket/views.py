@@ -9,6 +9,9 @@ from .models import Product
 from django.contrib.auth.decorators import login_required
 from .forms import UpdateUserForm, UpdatePasswordForm, ProductForm
 from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     products = Product.objects.all()
@@ -70,7 +73,7 @@ def profile(request):
 
 @login_required
 def edit_product(request, id):
-    product = Product.objects.get(id=id)
+    product = get_object_or_404(Product, id=id)
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
@@ -78,8 +81,7 @@ def edit_product(request, id):
             return redirect('profile')
     else:
         form = ProductForm(instance=product)
-    return render(request, 'profile.html', {'form': form})
-
+    return render(request, 'edit_product.html', {'form': form, 'product_name': product.name})
 @login_required
 def delete_product(request, id):
     product = Product.objects.get(id=id)
@@ -87,15 +89,14 @@ def delete_product(request, id):
         product.delete()
         return HttpResponseRedirect('/profile')
     return render(request, 'profile.html', {'product': product})
-
+# Change render / redirect, delete works just bugs out profile page. 
 def view_product(request, id):
     try:
         product = Product.objects.get(id=id)
         data = {
             'name': product.name,
-            'price': product.price,
             'description': product.description,
-            'seller': product.seller.username
+            'seller': product.seller.email
         }
         return JsonResponse(data)
     except:
