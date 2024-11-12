@@ -32,13 +32,59 @@
                 <h3>{{ product.name }}</h3>
                 <p>${{ product.price }}</p>
                 <a href="{% url 'signin' %}">
-                    <button>View More Info</button>
+                    <button class="openModalBtn" data-id="{{ product.id }}">View Product</button>
                 </a>
             </div>
             {% endfor %}
         </section>
                 
     </div>
+<!-- Modal Structure -->
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="product-name"></h2>
+        <p id="product-description"></p>
+        <h4 id="product-seller-email"></h4>
+    </div>
+</div>
+<script>
+document.querySelectorAll('.openModalBtn').forEach(button => {
+    button.onclick = function(event) {
+        const productId = event.target.dataset.id;
+        
+        fetch(`/product/${productId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    document.getElementById('product-name').textContent = data.name;
+                    document.getElementById('product-description').textContent = data.description;
+                    document.getElementById('product-seller-email').textContent = data.seller_email;
+
+                    // Show the modal by setting the display style directly
+                    const modal = document.getElementById('infoModal');
+                    modal.style.display = 'flex';
+                } else {
+                    alert('Product not found');
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    };
+});
+
+// Close the modal
+document.querySelector('.close').onclick = function() {
+    document.getElementById('infoModal').style.display = 'none';
+};
+
+window.onclick = function(event) {
+    const modal = document.getElementById('infoModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+};
+</script>
+    
 
 </body>
 </html>

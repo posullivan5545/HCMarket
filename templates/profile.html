@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Profile</title>
 </head>
-<body>
-    <header>
-        <h1>Welcome to Your Profile</h1>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+    <header style="background-color: #333; color: #fff; padding: 10px 0; text-align: center;">
+        <h1>Profile Page</h1>
     </header>
-    <main>
-        <section>
-            <h2>About Me</h2>
-            <p>This is a brief description about the user.</p>
-        </section>
-        <section>
-            <h2>Contact Information</h2>
-            <p>Email: user@example.com</p>
-            <p>Phone: (123) 456-7890</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 HCMarket</p>
-    </footer>
+    <div class="container" style="max-width: 800px; margin: 20px auto; background-color: #fff; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h2 style="color: #333;">Welcome, {{ user.username }}</h2>
+        <p>Email: {{ user.email }}</p>
+        
+        <form method="post" style="margin-top: 20px;">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ password_form.as_p }}
+            <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">Update Profile</button>
+        </form>
+        
+        <h3 style="margin-top: 40px; color: #333;">Your Products</h3>
+        <ul style="list-style-type: none; padding: 0;">
+            {% for product in products %}
+                <li style="background-color: #f9f9f9; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd;">
+                    {{ product.name }} - {{ product.price }}
+                    <a href="{% url 'edit_product' product.id %}" style="color: #007BFF; text-decoration: none; margin-left: 10px;">Edit</a>
+                    <a href="{% url 'delete_product' product.id %}" style="color: #FF0000; text-decoration: none; margin-left: 10px;">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
