@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #4B2C82;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,13 +25,14 @@
         h1 {
             text-align: center;
             color: #333;
+            font-size: 40px;
         }
         form {
             display: flex;
             flex-direction: column;
         }
         form input, form textarea, form button {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
@@ -60,11 +61,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>Create New Product</h1>
+        <h1>List New Product</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Create Product</button>
+            <button type="submit">List Product</button>
         </form>
         <a href="{% url 'profile' %}" class="cancel-link">Cancel</a>
     </div>
