@@ -102,4 +102,21 @@ def view_product(request, id):
     except:
         return JsonResponse({'error': 'Product not found'}, status=404)
 
+def search(request):
+    query = request.GET.get('query', '').strip()  # Get the search query from the GET parameters
+    if query:
+        # Perform a case-insensitive search on the 'name' and 'description' fields of the Product model
+        products = Product.objects.filter(name__icontains=query) | Product.objects.filter(description__icontains=query)
+    else:
+        products = Product.objects.all()  # If no query is provided, return all products
+
+    context = {
+        'products': products,
+        'query': query,  # Include the query for display purposes (optional)
+    }
+    return render(request, 'search_results.html', context)
+
+
+        
+
 
