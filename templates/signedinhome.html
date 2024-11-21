@@ -48,7 +48,7 @@
 
     <nav>
         <span class="welcome-user">Welcome, {{ username }}!</span>
-        <a href="#">Sell Item</a>
+        <a href="{% url 'list_item' %}">Sell Item</a>
         <a href="{% url 'home' %}">Sign Out</a>
         <a href="{% url 'profile' %}">Profile</a>
     </nav>

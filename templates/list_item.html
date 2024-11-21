@@ -1,8 +1,9 @@
-<!-- templates/edit_product.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Edit Product</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Product</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +25,7 @@
         h1 {
             text-align: center;
             color: #333;
+            font-size: 40px;
         }
         form {
             display: flex;
@@ -37,13 +39,13 @@
             border-radius: 4px;
         }
         form button {
-            background-color: #28a745;
+            background-color: #007BFF;
             color: white;
             border: none;
             cursor: pointer;
         }
         form button:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
         .cancel-link {
             text-align: center;
@@ -59,11 +61,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>Edit {{product_name}}</h1>
+        <h1>List New Product</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Save changes</button>
+            <button type="submit">List Product</button>
         </form>
         <a href="{% url 'profile' %}" class="cancel-link">Cancel</a>
     </div>

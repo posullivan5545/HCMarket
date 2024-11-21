@@ -101,6 +101,19 @@ def view_product(request, id):
         return JsonResponse(data)
     except:
         return JsonResponse({'error': 'Product not found'}, status=404)
+    
+@login_required
+def list_item(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False) # Delayed saving to database
+            product.seller = request.user
+            product.save()
+            return redirect('profile')
+    else:
+        form = ProductForm()
+    return render(request, 'list_item.html', {'form': form})
 
 def search(request):
     query = request.GET.get('query', '').strip()  # Get the search query from the GET parameters
