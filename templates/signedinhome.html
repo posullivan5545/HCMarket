@@ -38,6 +38,57 @@
         header, nav, .container {
             margin: 0 auto;
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #6a0dad;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content h2, .modal-content p, .modal-content h4 {
+            margin: 10px 0;
+        }
+
+        .modal-content .label {
+            background-color: white;
+            color: #6a0dad;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -66,16 +117,18 @@
         </section>
 
         <section class="item-list">
-            {% for product in products %}
-            <div class="item">
-                <img src="{{ product.image_url }}" alt="Attached Image">
-                <h3>{{ product.name }}</h3>
-                <p>${{ product.price }}</p>
-                <a href="{% url 'signin' %}">
-                    <button class="openModalBtn" data-id="{{ product.id }}">View Product</button>
-                </a>
-            </div>
-            {% endfor %}
+            {% if products %}
+                {% for product in products %}
+                <div class="item">
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>${{ product.price }}</p>
+                    <button class="view-btn" data-id="{{ product.id }}">View Details</button>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No items found matching your search.</p>
+            {% endif %}
         </section>
     </div>
 
@@ -83,14 +136,17 @@
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
+            <div class="label">Name</div>
             <h2 id="product-name"></h2>
+            <div class="label">Description</div>
             <p id="product-description"></p>
+            <div class="label">Contact Info</div>
             <h4 id="product-seller-email"></h4>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.openModalBtn').forEach(button => {
+        document.querySelectorAll('.view-btn').forEach(button => {
             button.onclick = function(event) {
                 const productId = event.target.dataset.id;
 
@@ -124,6 +180,7 @@
                 modal.style.display = 'none';
             }
         };
+    </script>
     </script>
 
 </body>
