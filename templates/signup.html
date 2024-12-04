@@ -58,11 +58,21 @@
         .signup-container button:hover {
             background-color: #0056b3;
         }
+        .alert {
+            color: red;
+            font-weight: 10px;
+        }
     </style>
-</head>
 <body class="signup-page">
     <div class="signup-container">
         <h2>Sign Up</h2>
+        {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
         <form id="signup-form" method="post" action="{% url 'signup' %}">
             {% csrf_token %}
             <div class="form-group">
@@ -80,15 +90,5 @@
             <button type="submit">Signup</button>
         </form>
     </div>
-
-    <!-- Popup Message -->
-    <div id="popup-message" class="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <p id="popup-text"></p>
-        </div>
-    </div>
-
-    <script src="{% static 'script.js' %}"></script>
 </body>
 </html>
