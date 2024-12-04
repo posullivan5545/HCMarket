@@ -202,7 +202,11 @@
                         if (!data.error) {
                             document.getElementById('product-name').textContent = data.name;
                             document.getElementById('product-description').textContent = data.description;
-                            document.getElementById('product-seller-email').textContent = data.seller;
+                            if (!data.in_negotiation) {
+                                document.getElementById('product-seller-email').textContent = data.seller;
+                            } else {
+                                document.getElementById('product-seller-email').textContent = 'Negotiation in progress';
+                            }
 
                             // Show the modal by setting the display style directly
                             const modal = document.getElementById('infoModal');
@@ -214,6 +218,7 @@
                     .catch(error => console.error('Error fetching data:', error));
             };
         });
+        
 
         // Close the modal
         document.querySelector('.close').onclick = function() {

@@ -64,7 +64,11 @@
         <h1>List New Product</h1>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form.name.label_tag }} {{ form.name }}
+            {{ form.price.label_tag }} {{ form.price }}
+            {{ form.description.label_tag }} {{ form.description }}
+            {{ form.image_url.label_tag }} {{ form.image_url }}
+            <!-- Exclude is_sold and in_negotiation fields -->
             <button type="submit">List Product</button>
         </form>
         <a href="{% url 'profile' %}" class="cancel-link">Cancel</a>

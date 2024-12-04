@@ -17,4 +17,4 @@ class UpdatePasswordForm(PasswordChangeForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'image_url']
+        fields = ['name', 'description', 'price', 'image_url','is_sold', 'in_negotiation']

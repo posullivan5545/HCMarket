@@ -14,12 +14,12 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(is_sold=False) #Only return unsold items to display
     return render(request, 'index.html', {'products': products})
 @login_required
 def acchome(request):
     if request.user.is_authenticated:
-        products = Product.objects.all()
+        products = Product.objects.filter(is_sold=False) #Only return unsold items to display
         content = {'username': request.user.username, 'products': products}
         return render(request, 'signedinhome.html', content)
     else:
@@ -96,7 +96,8 @@ def view_product(request, id):
         data = {
             'name': product.name,
             'description': product.description,
-            'seller': product.seller.email
+            'seller': product.seller.email,
+            'in_negotiation': product.in_negotiation
         }
         return JsonResponse(data)
     except:
@@ -106,6 +107,9 @@ def view_product(request, id):
 def list_item(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
+        #Come back to if time, not originally working in removing these two from form to list item.
+        #form.fields.pop('is_sold')
+        #form.fields.pop('in_negotiation')
         if form.is_valid():
             product = form.save(commit=False) # Delayed saving to database
             product.seller = request.user
